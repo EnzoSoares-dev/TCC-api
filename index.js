@@ -1,11 +1,11 @@
 import express from 'express';
-import { connect } from '../db/connection.js';
-import { getEmpresa, postEmpresa, updateEmpresa, loginEmpresa } from '../service/empresa.js';
+import { connect } from './db/connection.js';
+import { getEmpresa, postEmpresa, updateEmpresa, loginEmpresa } from './service/empresa.js';
 import bodyParser from 'body-parser';
-import { validaLoginCandidato, validaLoginEmpresa } from '../service/auth.js';
-import { getCandidato, loginCandidato, postCandidato, updateCandidato } from '../service/candidato.js';
-import { postVaga, createEtapa, createQuestao, insertCandidato, getVagaByName, getvagaById, getVaga, getVagaByIdCandidato, getVagaByIdEmpresa, deleteVaga, deleteEtapa, deleteQuestao } from '../service/vaga.js';
-import { postResultado } from '../service/resultado.js';
+import { validaLoginCandidato, validaLoginEmpresa } from './service/auth.js';
+import { getCandidato, loginCandidato, postCandidato, updateCandidato } from './service/candidato.js';
+import { postVaga, createEtapa, createQuestao, insertCandidato, getVagaByName, getvagaById, getVaga, getVagaByIdCandidato, getVagaByIdEmpresa, deleteVaga, deleteEtapa, deleteQuestao } from './service/vaga.js';
+import { postResultado } from './service/resultado.js';
 
 const routes = express();
 connect()
