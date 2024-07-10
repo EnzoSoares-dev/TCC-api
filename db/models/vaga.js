@@ -1,6 +1,7 @@
 import { ObjectId } from "mongodb";
 import { Schema, model } from "mongoose";
 
+
 const vagaSchema = Schema({
     idEmpresa: ObjectId,
     nome: String,
