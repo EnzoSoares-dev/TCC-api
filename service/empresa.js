@@ -72,6 +72,7 @@ export const loginEmpresa = async (req, res) => {
     const { email, senha } = req.body;
     try {
         const response = await Empresa.findOne({ email: email, senha: senha });
+        console.log(response)
         const token = jsonwebtoken.sign(
             { id: response._id, role: "empresa" },
             PRIVATE_KEY,
