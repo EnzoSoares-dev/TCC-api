@@ -1,4 +1,5 @@
 import express from 'express';
+import cors from 'cors';
 import { connect } from './db/connection.js';
 import { getEmpresa, postEmpresa, updateEmpresa, loginEmpresa } from './service/empresa.js';
 import bodyParser from 'body-parser';
@@ -9,6 +10,7 @@ import { postResultado } from './service/resultado.js';
 
 const routes = express();
 connect()
+routes.use(cors())
 routes.use(bodyParser.json())
 
 routes.get("/", (req, res) => res.send("Olá"))
