@@ -69,7 +69,8 @@ export const deleteEmpresa = (req, res) => {
 }
 
 export const loginEmpresa = async (req, res) => {
-    const { email, senha } = req.body;
+    const { email, senha } = req.params;
+    console.log(req.params)
     try {
         const response = await Empresa.findOne({ email: email, senha: senha });
         console.log(response)

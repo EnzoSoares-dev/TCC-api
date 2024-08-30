@@ -16,12 +16,12 @@ routes.use(bodyParser.json())
 routes.get("/", (req, res) => res.send("Olá"))
 
 routes.post("/empresa", postEmpresa);
-routes.get("/empresa/login", loginEmpresa);
+routes.get("/empresa/login/:email/:senha", loginEmpresa);
 routes.get("/empresa/:id",validaLoginEmpresa, getEmpresa);
 routes.put("/empresa/:id",validaLoginEmpresa, updateEmpresa);
 
 routes.post("/candidato",postCandidato);
-routes.get("/candidato/login",loginCandidato);
+routes.get("/candidato/login/:email/:senha",loginCandidato);
 routes.get("/candidato/:id",validaLoginCandidato,getCandidato);
 routes.put("/candidato/:id",validaLoginCandidato,updateCandidato);
 routes.put("/candidato/:idCandidato/:idVaga/candidatar",validaLoginCandidato,insertCandidato);
