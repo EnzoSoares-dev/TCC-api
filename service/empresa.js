@@ -9,7 +9,13 @@ export const postEmpresa = async (req, res) => {
             try {
                 const response = await novaEmpresa.save();
                 if (response._id) {
+                    const token = jsonwebtoken.sign(
+                        { id: response._id, role: "empresa" },
+                        PRIVATE_KEY,
+                        { expiresIn: "60m" }
+                    );
                     res.status(200).json({
+                        "token":token,
                         "message": "Empresa cadastrada com sucesso!"
                     });
                 };
@@ -70,10 +76,8 @@ export const deleteEmpresa = (req, res) => {
 
 export const loginEmpresa = async (req, res) => {
     const { email, senha } = req.params;
-    console.log(req.params)
     try {
         const response = await Empresa.findOne({ email: email, senha: senha });
-        console.log(response)
         const token = jsonwebtoken.sign(
             { id: response._id, role: "empresa" },
             PRIVATE_KEY,

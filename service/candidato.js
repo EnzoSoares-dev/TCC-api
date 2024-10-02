@@ -9,7 +9,13 @@ export const postCandidato = async (req, res) => {
             try{
                 const response = await novoCandidato.save();
                 if(response._id){
+                    const token = jsonwebtoken.sign(
+                        { id: response._id, role: "candidato" },
+                        PRIVATE_KEY,
+                        { expiresIn: "60m" }
+                    );
                     res.status(200).json({
+                        "token":token,
                         "message":"Usuário cadastrado com sucesso!"
                     })
                 }
