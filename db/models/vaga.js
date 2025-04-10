@@ -6,6 +6,7 @@ const vagaSchema = Schema({
     idEmpresa: ObjectId,
     nome: String,
     descricao: String,
+    salario:Number,
     dataInicio: Date,
     dataFinal: Date,
     etapas: [{
