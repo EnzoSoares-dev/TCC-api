@@ -11,7 +11,8 @@ export const postVaga = async (req, res) => {
         const response = await novaVaga.save()
         if (response._id) {
             res.status(200).json({
-                "message": "Vaga cadastrada com sucesso!"
+                "message": "Vaga cadastrada com sucesso!",
+                "id":response._id
             })
         }
     } catch (e) {
