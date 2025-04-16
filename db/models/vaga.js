@@ -25,6 +25,7 @@ const vagaSchema = Schema({
     }],
     candidatos: [{
         idCandidato: ObjectId,
+        nomeCandidato:String,
         etapaVigente: Number
     }]
 })
