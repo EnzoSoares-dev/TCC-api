@@ -27,13 +27,11 @@ export const createEtapa = async (req, res) => {
     const { body } = req;
     try {
         const findVaga = await Vaga.findById(idVaga);
-        console.log("velho ", findVaga.etapas)
-        findVaga.etapas = body.etapas;
-        findVaga.etapas[findVaga.etapas.length - 1] = { posicao: findVaga.etapas.length, ...findVaga.etapas[findVaga.etapas.length - 1] }
-        console.log("novo ", findVaga.etapas);
+        body.posicao = findVaga.etapas.length + 1;
+        findVaga.etapas.push(body);
+
         const response = findVaga.save();
         if (response !== undefined) {
-            console.log(response)
             res.status(200).json({
                 "message": "Vaga atualizada"
             })
@@ -67,7 +65,7 @@ export const insertCandidato = async (req, res) => {
     const { idCandidato } = req.params;
     if(Vaga.findOne({ _id: idVaga, 'candidatos.idCandidato': idCandidato })){
         try {
-            const response = await Vaga.findOneAndUpdate({ "_id": idVaga },{$push:{candidatos:{idCandidato:idCandidato,etapaVigente:1}}})
+            const response = await Vaga.findOneAndUpdate({ "_id": idVaga },{$push:{candidatos:{idCandidato:idCandidato,etapaVigente:1,nomeCandidato:req.body.nomeCandidato}}});
             if(response){
                 res.status(200).json({
                     "message":"Candidatura realizada com sucesso!"
@@ -86,15 +84,14 @@ export const insertCandidato = async (req, res) => {
     }
 }
 export const getVagaByName = async (req,res) =>{
-    const {body} = req    
+    const {nomeVaga} = req.params
+    const vaga = JSON.parse(nomeVaga)
     try{
-        const response = await Vaga.find({"nome":{$regex:'.*'+body.vaga+'.*', $options: 'i' }});
+        const response = await Vaga.find({"nome":{$regex:'.*'+vaga.vaga+'.*', $options: 'i' }});
         if(response.length>=1){
             res.status(200).json(response);
         }else{
-            res.status(404).json({
-                "message":"Vagas não encontradas"
-            });
+            res.status(200).json([]);
         }
     }catch(e){
         console.info(e)
@@ -135,10 +132,10 @@ export const getVaga = async (req, res) => {
     }
 }
 export const getVagaByIdCandidato = async (req, res) => {
-    const {idCandidato} = req.params;    
+    const {idcandidato} = req.params;
+    const newResponse = []
     try{
-        const response = await Vaga.find({"candidatos[].idCandidato":idCandidato});
-        console.log(response)
+        const response = await Vaga.find({"candidatos.idCandidato":idcandidato});
         if(response.length>=1){
             res.status(200).json(response);
         }else{

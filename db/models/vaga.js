@@ -4,6 +4,7 @@ import { Schema, model } from "mongoose";
 
 const vagaSchema = Schema({
     idEmpresa: ObjectId,
+    nomeEmpresa: String,
     nome: String,
     descricao: String,
     salario:Number,

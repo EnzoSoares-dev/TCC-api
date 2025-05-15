@@ -69,9 +69,9 @@ export const deleteCandidato = (req, res) => {
 
 }
 export const loginCandidato = async (req, res) => {
-    const { email, senha } = req.body;
+    const { email, senha } = req.params;
     try{
-        const response = await Candidato.findOne({ email: email, senha: senha });
+        const response = await Candidato.findOne({ email: email, senha: senha })
         const token = jsonwebtoken.sign(
             { id: response._id, role: "candidato" },
             PRIVATE_KEY,

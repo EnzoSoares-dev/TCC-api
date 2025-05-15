@@ -21,8 +21,7 @@ const candidatoSchema = new Schema({
         certificados: [{
             nome: String,
             descricao: String,
-            data_inicio: Date,
-            data_final: Date
+            data_emissao: Date
         }]
     }
 })
