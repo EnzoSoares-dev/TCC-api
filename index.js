@@ -6,7 +6,7 @@ import bodyParser from 'body-parser';
 import { validaLoginCandidato, validaLoginEmpresa } from './service/auth.js';
 import { getCandidato, loginCandidato, postCandidato, updateCandidato } from './service/candidato.js';
 import { postVaga, createEtapa, createQuestao, insertCandidato, getVagaByName, getvagaById, getVaga, getVagaByIdCandidato, getVagaByIdEmpresa, deleteVaga, deleteEtapa, deleteQuestao } from './service/vaga.js';
-import { postResultado } from './service/resultado.js';
+import { postResultado, getResultado } from './service/resultado.js';
 
 const routes = express();
 connect()
@@ -29,15 +29,16 @@ routes.put("/candidato/:idCandidato/:idVaga/candidatar",validaLoginCandidato,ins
 routes.post("/empresa/:id/vaga",validaLoginEmpresa,postVaga);
 routes.put("/empresa/etapa/:idVaga",validaLoginEmpresa,createEtapa);
 routes.put("/empresa/vaga/etapa/:idEtapa/questao",validaLoginEmpresa,createQuestao);
+routes.get("/vaga/nome/:nomeVaga",validaLoginCandidato,getVagaByName);
 routes.get("/vaga/:idVaga",getvagaById);
 routes.get("/vaga",validaLoginCandidato,getVaga);
-routes.get("/vaga/nome",validaLoginCandidato,getVagaByName);
 routes.get("/candidato/vagas/:idcandidato",validaLoginCandidato,getVagaByIdCandidato)
 routes.get("/empresa/vagas/:idEmpresa",validaLoginEmpresa,getVagaByIdEmpresa);
 routes.delete("/empresa/vagas/:idVaga",validaLoginEmpresa,deleteVaga);
 routes.delete("/empresa/vagas/:idVaga/etapa/:idEtapa",validaLoginEmpresa,deleteEtapa);
 routes.delete("/empresa/vagas/:idVaga/etapa/:idEtapa/questao/:idQuestao",validaLoginEmpresa,deleteQuestao);
 
+routes.get("/candidato/:idCandidato/etapa/:idEtapa/resultado",validaLoginCandidato,getResultado);
 routes.post("/candidato/:idCandidato/etapa/:idEtapa/resultado",validaLoginCandidato,postResultado);
 
 routes.listen(9000, () => console.log("Servidor rodando na porta 9000"))
