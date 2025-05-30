@@ -24,7 +24,7 @@ export const postResultado = async (req, res) => {
             }
         }else{
             res.status(200).json({
-                "message":"Infelizmente você não foi aprovado nesta etapa, continue tentando!"
+                "message":"Infelizmente você não foi aprovado nesta etapa, sua jornada termina aqui! Mas não se acanhe, continue tentando!",
             })
         }
     }else{
