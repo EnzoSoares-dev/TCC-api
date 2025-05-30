@@ -5,7 +5,6 @@ export const postResultado = async (req, res) => {
     const { idCandidato, idEtapa } = req.params;
     const { body } = req;
     let media = 0;
-    
     body.forEach((questao, index) => {        
         if (questao.certa) {
             media++;
@@ -17,14 +16,17 @@ export const postResultado = async (req, res) => {
     const response = resultado.save();
     if (response) {
         if (aprovado) {
-            Vaga.findOneAndUpdate({'candidatos.idCandidato': idCandidato }, { $inc: { 'candidatos.$.etapaVigente': 1 } })
+            const vagaAtualizada = await Vaga.findOneAndUpdate({'candidatos.idCandidato': idCandidato }, { $inc: { 'candidatos.$.etapaVigente': 1 } })
+            if (vagaAtualizada) {
+                res.status(200).json({
+                    "message":"Prova realizada com sucesso!"
+                })
+            }
+        }else{
             res.status(200).json({
-                "message":"Prova realizada com sucesso!"
+                "message":"Infelizmente você não foi aprovado nesta etapa, continue tentando!"
             })
         }
-        res.status(200).json({
-            "message":"Infelizmente você não foi aprovado nesta etapa, continue tentando!"
-        })
     }else{
         res.status(400).json({
             "message":"Não foi possível concluir a sua prova, tente novamente mais tarde."
